@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { UserPlus, CheckCircle2, Lightbulb, User, Utensils, LayoutList } from 'lucide-react';
+import { UserPlus, CheckCircle2, Lightbulb, User, Utensils, LayoutList, Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         owner_name: '', phone: '', email: '', password: '', 
         nic_number: '', registration_id: '', registration_date: '',
@@ -100,7 +101,37 @@ const Register = () => {
                         </div>
                         <div className="form-group" style={{gridColumn: '1 / -1'}}>
                             <label className="form-label" style={{fontSize: '0.75rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase'}}>Password</label>
-                            <input type="password" className="form-control" style={{background: '#f1f5f9', border: 'none'}} value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required />
+                            <div style={{ position: 'relative' }}>
+                                <input 
+                                    type={showPassword ? "text" : "password"} 
+                                    className="form-control" 
+                                    style={{background: '#f1f5f9', border: 'none', paddingRight: '2.75rem'}} 
+                                    value={formData.password} 
+                                    onChange={e => setFormData({...formData, password: e.target.value})} 
+                                    required 
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    style={{
+                                        position: 'absolute',
+                                        right: '0.75rem',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        background: 'none',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        padding: '0.25rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: '#64748b'
+                                    }}
+                                    title={showPassword ? "Hide password" : "Show password"}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
                         </div>
 
                         {/* Section 2 */}

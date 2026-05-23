@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 async function initDB() {
     try {
@@ -10,9 +11,10 @@ async function initDB() {
             password: process.env.DB_PASSWORD || ''
         });
 
-        console.log(`Creating database ${process.env.DB_NAME} if not exists...`);
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`);
-        await connection.query(`USE \`${process.env.DB_NAME}\`;`);
+        const dbName = process.env.DB_NAME || 'sfms_db';
+        console.log(`Creating database ${dbName} if not exists...`);
+        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
+        await connection.query(`USE \`${dbName}\`;`);
 
         console.log('Creating tables...');
 
